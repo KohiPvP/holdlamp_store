@@ -552,14 +552,21 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 12px;
+            min-width: 0;
+            flex-wrap: nowrap;
         }
 
         .box-title {
             font-size: 15px;
             font-weight: 900;
             letter-spacing: .01em;
+            white-space: nowrap;
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .micro {
@@ -570,6 +577,7 @@
             font-size: 12px;
             font-weight: 800;
             white-space: nowrap;
+            flex: 0 0 auto;
         }
 
         .size-grid {
@@ -1235,12 +1243,16 @@
                 padding: 13px
             }
 
+            .box-head {
+                gap: 8px;
+            }
+
             .box-title {
                 font-size: 14px
             }
 
             .micro {
-                font-size: 11px;
+                font-size: 10px;
                 padding: 7px 9px
             }
 
@@ -1562,17 +1574,18 @@
             }
 
             .box-head {
-                gap: 8px;
+                gap: 6px;
                 margin-bottom: 10px
             }
 
             .box-title {
-                font-size: 13px
+                font-size: 13px;
+                white-space: nowrap;
             }
 
             .micro {
-                font-size: 10px;
-                padding: 6px 8px
+                font-size: 9px;
+                padding: 6px 7px;
             }
 
             .size-grid,
@@ -1908,6 +1921,19 @@
             .bundle-desc {
                 font-size: 8px;
                 line-height: 1.18;
+            }
+
+            .box-head {
+                gap: 5px;
+            }
+
+            .box-title {
+                font-size: 12px;
+            }
+
+            .micro {
+                font-size: 8px;
+                padding: 5px 6px;
             }
 
             .size-price .new {
@@ -2624,6 +2650,70 @@
         renderAll();
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        function measureNaturalWidth(el, forcedDisplay = "block") {
+            const clone = el.cloneNode(true);
+
+            clone.style.position = "absolute";
+            clone.style.visibility = "hidden";
+            clone.style.pointerEvents = "none";
+            clone.style.left = "-99999px";
+            clone.style.top = "0";
+            clone.style.width = "max-content";
+            clone.style.minWidth = "max-content";
+            clone.style.maxWidth = "none";
+            clone.style.overflow = "visible";
+            clone.style.textOverflow = "clip";
+            clone.style.whiteSpace = "nowrap";
+            clone.style.flex = "none";
+            clone.style.display = forcedDisplay;
+
+            document.body.appendChild(clone);
+            const width = Math.ceil(clone.getBoundingClientRect().width);
+            clone.remove();
+
+            return width;
+        }
+
+        function updateSectionBadges() {
+            document.querySelectorAll(".box-head").forEach(head => {
+                const title = head.querySelector(".box-title");
+                const badge = head.querySelector(".micro");
+
+                if (!title || !badge) return;
+
+                const styles = getComputedStyle(head);
+                const gap = parseFloat(styles.columnGap || styles.gap || 0);
+                const availableWidth = Math.floor(head.getBoundingClientRect().width);
+
+                const titleWidth = measureNaturalWidth(title, "block");
+                const badgeWidth = measureNaturalWidth(badge, "inline-flex");
+
+                const safety = 2;
+                const shouldShow = availableWidth >= titleWidth + gap + badgeWidth + safety;
+
+                badge.style.display = shouldShow ? "inline-flex" : "none";
+            });
+        }
+
+        let badgeRaf = null;
+
+        function scheduleSectionBadgesUpdate() {
+            if (badgeRaf) return;
+
+            badgeRaf = requestAnimationFrame(() => {
+                badgeRaf = null;
+                updateSectionBadges();
+            });
+        }
+
+        window.addEventListener("load", scheduleSectionBadgesUpdate);
+        window.addEventListener("resize", scheduleSectionBadgesUpdate);
+        window.addEventListener("orientationchange", scheduleSectionBadgesUpdate);
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(scheduleSectionBadgesUpdate);
+        }
     </script>
 </body>
 
