@@ -1,0 +1,2532 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Holdlámpa | Mai napi akció</title>
+    <style>
+        :root {
+            --bg1: #9fd1ff;
+            --bg2: #5a93d1;
+            --bg3: #10203a;
+            --bg4: #071224;
+
+            --panel: rgba(255, 255, 255, .92);
+            --white: #fff;
+            --line: rgba(10, 27, 53, .10);
+            --text: #102033;
+            --muted: #617286;
+
+            --gold: #ffcf60;
+            --gold2: #ffb347;
+            --accent: #ff7a00;
+            --accent-hover: #e76c00;
+            --green: #1fa971;
+            --red: #d94b4b;
+            --blue: #2d72d9;
+
+            --shadow: 0 18px 45px rgba(6, 16, 34, .14);
+            --radius: 24px;
+            --radius-sm: 18px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 8% 10%, rgba(255, 255, 255, .65) 0 1px, transparent 2px),
+                radial-gradient(circle at 17% 22%, rgba(255, 255, 255, .5) 0 1.2px, transparent 2px),
+                radial-gradient(circle at 28% 12%, rgba(255, 255, 255, .9) 0 1.5px, transparent 2px),
+                radial-gradient(circle at 43% 16%, rgba(255, 255, 255, .45) 0 1px, transparent 2px),
+                radial-gradient(circle at 58% 8%, rgba(255, 255, 255, .7) 0 1.3px, transparent 2px),
+                radial-gradient(circle at 68% 18%, rgba(255, 255, 255, .55) 0 1px, transparent 2px),
+                radial-gradient(circle at 80% 12%, rgba(255, 255, 255, .85) 0 1.4px, transparent 2px),
+                radial-gradient(circle at 90% 24%, rgba(255, 255, 255, .48) 0 1px, transparent 2px),
+                linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 28%, var(--bg3) 62%, var(--bg4) 100%);
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 14% 0%, rgba(255, 255, 255, .12), transparent 30%),
+                radial-gradient(circle at 82% 18%, rgba(255, 232, 180, .15), transparent 24%);
+            mix-blend-mode: screen;
+        }
+
+        img {
+            display: block;
+            max-width: 100%
+        }
+
+        button {
+            font: inherit
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 120;
+            background: rgba(8, 20, 42, .82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+
+        .topbar-inner {
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 8px 16px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            align-items: center;
+        }
+
+        .top-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 36px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: .01em;
+            white-space: nowrap;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .08);
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-pill .top-pill-text {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .top-pill.sale {
+            background: rgba(255, 122, 0, .18);
+            color: #ffd8bc;
+            border-color: rgba(255, 122, 0, .24)
+        }
+
+        .top-pill.count {
+            background: rgba(255, 255, 255, .08);
+            color: #fff6d8
+        }
+
+        .top-pill.safe {
+            background: rgba(31, 169, 113, .16);
+            color: #d4ffed;
+            border-color: rgba(31, 169, 113, .2)
+        }
+
+        .top-pill.return {
+            background: rgba(45, 114, 217, .16);
+            color: #ddeaff;
+            border-color: rgba(45, 114, 217, .2)
+        }
+
+        .page {
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 18px 20px 110px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(470px, .95fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            min-width: 0;
+        }
+
+        .mini-reviews-card {
+            padding: 12px;
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid rgba(255, 255, 255, .48);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .mini-reviews-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .mini-reviews-head strong {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: -.02em;
+            color: var(--text);
+        }
+
+        .mini-reviews-head a {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--blue);
+            white-space: nowrap;
+        }
+
+        .mini-reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 92px));
+            gap: 10px;
+            justify-content: start;
+        }
+
+        .mini-review-card {
+            background: rgba(255, 255, 255, .82);
+            border: 1px solid rgba(10, 27, 53, .08);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 18px rgba(6, 16, 34, .05);
+        }
+
+        .mini-review-image {
+            width: 92px;
+            height: 92px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .mini-review-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mini-review-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 8px 10px;
+            background: #fff;
+            border-top: 1px solid rgba(10, 27, 53, .06);
+        }
+
+        .mini-review-stars {
+            font-size: 11px;
+            font-weight: 900;
+            color: #f8b400;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .mini-review-name {
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, .48);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-card {
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .gallery-top {
+            --thumb-col-width: 96px;
+            --thumb-gap: 10px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .main-media {
+            position: relative;
+            overflow: hidden;
+            border-radius: 22px;
+            border: 1px solid rgba(10, 27, 53, .08);
+            background: linear-gradient(180deg, #dcedff 0%, #9ec7f5 42%, #163352 100%);
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .main-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .floating-notes {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            bottom: 14px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+
+        .note {
+            padding: 9px 11px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid rgba(10, 27, 53, .08);
+            font-size: 12px;
+            font-weight: 800;
+            box-shadow: 0 10px 22px rgba(8, 18, 36, .08);
+        }
+
+        .thumb-grid {
+            width: var(--thumb-col-width);
+            min-width: var(--thumb-col-width);
+            display: grid;
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+            gap: var(--thumb-gap);
+            align-self: stretch;
+            height: 100%;
+        }
+
+        .thumb {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #fff;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(6, 16, 34, .06);
+            transition: .2s ease;
+            aspect-ratio: auto;
+        }
+
+        .thumb.active {
+            border-color: var(--blue);
+            box-shadow: 0 10px 22px rgba(45, 114, 217, .16)
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: auto;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+
+        .ugc-strip-wrap {
+            margin-top: 12px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .ugc-strip {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 2px 2px 6px;
+            scrollbar-width: thin;
+            width: 100%;
+        }
+
+        .ugc-photo {
+            display: block;
+            flex: 0 0 96px !important;
+            min-width: 96px;
+            width: 96px;
+            height: 96px;
+            overflow: hidden !important;
+            border-radius: 16px !important;
+            background: #fff;
+            border: 1px solid rgba(10, 27, 53, .08);
+            box-shadow: 0 8px 18px rgba(6, 16, 34, .05);
+        }
+
+        .ugc-photo img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+
+        .product-card {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            line-height: 1.02;
+            letter-spacing: -.03em;
+        }
+
+        .checkout-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(255, 249, 240, .96));
+            border: 1px solid rgba(255, 184, 77, .26);
+            border-radius: 22px;
+            padding: 16px;
+            box-shadow: 0 12px 24px rgba(255, 168, 60, .08);
+        }
+
+        .checkout-main {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .checkout-top-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .checkout-button-wrap {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .cta-main {
+            min-height: 62px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(180deg, var(--accent), #ef6f00);
+            color: #fff;
+            font-size: 18px;
+            font-weight: 950;
+            letter-spacing: .01em;
+            padding: 16px 22px;
+            cursor: pointer;
+            box-shadow: 0 16px 28px rgba(255, 122, 0, .28);
+            transition: .2s ease;
+        }
+
+        .cta-main:hover {
+            background: linear-gradient(180deg, #ff8c1e, var(--accent-hover))
+        }
+
+        .cta-main-priority {
+            width: 100%;
+            min-height: 72px;
+            font-size: 20px;
+            box-shadow: 0 18px 30px rgba(255, 122, 0, .30);
+        }
+
+        .checkout-side {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .checkout-price-line {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .checkout-price-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .checkout-price-inline {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hero-price-label {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .hero-price-now {
+            font-size: 36px;
+            line-height: 1;
+            font-weight: 950;
+            letter-spacing: -.04em;
+        }
+
+        .hero-price-old {
+            font-size: 14px;
+            color: #8f98a6;
+            text-decoration: line-through;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .hero-save-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 98px;
+            padding: 10px 12px;
+            border-radius: 16px;
+            background: #fff0d9;
+            color: #975600;
+            font-size: 13px;
+            font-weight: 950;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .checkout-review-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .payment-chip,
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .8);
+            border: 1px solid var(--line);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, .84);
+            border: 1px solid rgba(10, 27, 53, .08);
+            border-radius: 20px;
+            padding: 15px;
+        }
+
+        .box-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .box-title {
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: .01em;
+        }
+
+        .micro {
+            padding: 8px 11px;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid rgba(10, 27, 53, .08);
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .size-card {
+            position: relative;
+            padding: 14px;
+            background: #fff;
+            border: 2px solid transparent;
+            border-radius: 18px;
+            box-shadow: 0 8px 18px rgba(6, 16, 34, .05);
+            cursor: pointer;
+            transition: .2s ease;
+            text-align: left;
+            min-height: 120px;
+        }
+
+        .size-card.active {
+            border-color: var(--blue);
+            box-shadow: 0 12px 22px rgba(45, 114, 217, .14);
+        }
+
+        .size-name {
+            font-size: 18px;
+            font-weight: 950;
+            letter-spacing: -.02em;
+            margin-bottom: 3px;
+        }
+
+        .size-sub {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.45;
+            margin-bottom: 8px;
+        }
+
+        .size-price {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-price .old {
+            font-size: 13px;
+            color: #8e9cad;
+            font-weight: 800;
+            text-decoration: line-through;
+        }
+
+        .size-price .new {
+            font-size: 20px;
+            font-weight: 950;
+            letter-spacing: -.02em;
+        }
+
+        .size-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: #fff5da;
+            color: #8c5400;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .bundle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .bundle-card {
+            padding: 14px;
+            background: #fff;
+            border: 2px solid transparent;
+            border-radius: 18px;
+            box-shadow: 0 8px 18px rgba(6, 16, 34, .05);
+            cursor: pointer;
+            transition: .2s ease;
+            text-align: left;
+            min-height: 104px;
+        }
+
+        .bundle-card.active {
+            border-color: var(--green);
+            box-shadow: 0 12px 22px rgba(31, 169, 113, .14);
+        }
+
+        .bundle-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 7px;
+        }
+
+        .bundle-top strong {
+            font-size: 18px;
+            font-weight: 950;
+            letter-spacing: -.02em;
+        }
+
+        .bundle-save {
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: #e8fff6;
+            color: #0f8257;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .bundle-desc {
+            font-size: 13px;
+            line-height: 1.45;
+            color: var(--muted);
+        }
+
+        .trust-stats-lower {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .trust-box {
+            background: rgba(255, 255, 255, .78);
+            border: 1px solid rgba(10, 27, 53, .08);
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .trust-box .big {
+            display: block;
+            font-size: 24px;
+            font-weight: 950;
+            letter-spacing: -.03em;
+            margin-bottom: 3px;
+        }
+
+        .trust-box .small {
+            display: block;
+            font-size: 12px;
+            line-height: 1.45;
+            color: var(--muted);
+        }
+
+        .section {
+            margin-top: 28px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 34px;
+            line-height: 1.05;
+            letter-spacing: -.03em;
+        }
+
+        .section-head p {
+            margin: 0;
+            max-width: 68ch;
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, .82);
+        }
+
+        .size-compare {
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid rgba(255, 255, 255, .5);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 22px;
+        }
+
+        .size-stage {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 300px;
+            padding: 20px 10px 0;
+        }
+
+        .size-stage::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 42px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(10, 27, 53, .08), rgba(10, 27, 53, .2), rgba(10, 27, 53, .08));
+        }
+
+        .size-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            z-index: 1;
+        }
+
+        .moon-stand {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            width: 100%;
+            min-height: 210px;
+        }
+
+        .moon-ball {
+            position: relative;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .95) 0 16%, rgba(255, 247, 216, .96) 17% 34%, rgba(237, 219, 171, .98) 35% 100%);
+            box-shadow:
+                inset -18px -14px 28px rgba(180, 120, 0, .12),
+                inset 12px 14px 24px rgba(255, 255, 255, .5),
+                0 0 28px rgba(255, 205, 110, .42),
+                0 0 70px rgba(255, 205, 110, .22);
+        }
+
+        .moon-ball::before,
+        .moon-ball::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(170, 128, 45, .09);
+        }
+
+        .moon-ball::before {
+            width: 18%;
+            height: 18%;
+            top: 22%;
+            left: 18%;
+            box-shadow:
+                90px 46px 0 rgba(170, 128, 45, .07),
+                42px 118px 0 6px rgba(170, 128, 45, .06),
+                126px 132px 0 rgba(170, 128, 45, .05);
+        }
+
+        .moon-ball::after {
+            width: 12%;
+            height: 12%;
+            top: 58%;
+            right: 24%;
+            box-shadow:
+                -108px -26px 0 8px rgba(170, 128, 45, .06),
+                -34px -92px 0 rgba(170, 128, 45, .05);
+        }
+
+        .stand {
+            position: absolute;
+            bottom: 0;
+            width: 48%;
+            height: 54px;
+            border: 4px solid #ad7c31;
+            border-top: none;
+            border-radius: 0 0 999px 999px;
+            box-shadow: 0 10px 18px rgba(0, 0, 0, .08);
+        }
+
+        .size-meta {
+            text-align: center
+        }
+
+        .size-meta strong {
+            display: block;
+            font-size: 22px;
+            letter-spacing: -.02em;
+            margin-bottom: 4px;
+        }
+
+        .size-meta span {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--muted);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        .gallery-photo {
+            overflow: hidden;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(255, 255, 255, .42);
+            box-shadow: 0 14px 28px rgba(6, 16, 34, .12);
+        }
+
+        .gallery-photo img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            padding: 10px 12px 12px;
+            background: #fff;
+            border-top: 1px solid rgba(10, 27, 53, .06);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid rgba(255, 255, 255, .48);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 18px;
+        }
+
+        .review-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #d9ebff, #fff0cf);
+            border: 1px solid rgba(10, 27, 53, .08);
+            font-weight: 950;
+            color: #24435d;
+        }
+
+        .reviewer strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .reviewer span {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .review-photo {
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(10, 27, 53, .08);
+            background: #fff;
+            margin: 12px 0 14px;
+        }
+
+        .review-photo img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+
+        .review-body {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #334357;
+        }
+
+        .faq-wrap {
+            display: grid;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, .92);
+            border: 1px solid rgba(255, 255, 255, .48);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-q {
+            width: 100%;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            text-align: left;
+            padding: 18px 20px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 950;
+            color: var(--text);
+        }
+
+        .faq-q span:last-child {
+            font-size: 24px;
+            line-height: 1;
+            color: #5e7090;
+            transition: .2s ease;
+        }
+
+        .faq-item.open .faq-q span:last-child {
+            transform: rotate(45deg)
+        }
+
+        .faq-a {
+            display: none;
+            padding: 0 20px 18px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #445467;
+        }
+
+        .faq-item.open .faq-a {
+            display: block
+        }
+
+        .mobile-sticky-buy {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 130;
+            display: none;
+            padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+            background: rgba(8, 20, 42, .92);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .mobile-buy-inner {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: center;
+            max-width: 740px;
+            margin: 0 auto;
+        }
+
+        .mobile-price {
+            min-width: 110px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .mobile-price small {
+            display: block;
+            color: rgba(255, 255, 255, .7);
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: line-through;
+            margin-top: 2px;
+        }
+
+        .mobile-buy-btn {
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(180deg, var(--accent), #ef6f00);
+            color: #fff;
+            min-height: 50px;
+            font-size: 16px;
+            font-weight: 950;
+            letter-spacing: .01em;
+            padding: 12px 18px;
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            text-align: center;
+            color: rgba(255, 255, 255, .82);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width:1279px) {
+            .page {
+                padding: 16px 16px 96px
+            }
+
+            .hero {
+                grid-template-columns: minmax(0, 1fr) minmax(0, .95fr);
+                gap: 18px;
+            }
+
+            .hero-left {
+                gap: 16px
+            }
+
+            .gallery-card,
+            .product-card {
+                padding: 14px
+            }
+
+            .gallery-top {
+                --thumb-col-width: 88px;
+                --thumb-gap: 8px;
+                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+                gap: 10px;
+            }
+
+            .main-media {
+                max-height: 430px;
+            }
+
+            .thumb,
+            .ugc-photo {
+                flex: 0 0 88px !important;
+                min-width: 88px;
+                width: 88px;
+                height: 88px;
+                border-radius: 14px !important;
+            }
+
+            h1 {
+                font-size: 38px
+            }
+
+            .section-head h2 {
+                font-size: 30px
+            }
+
+            .cta-main-priority {
+                min-height: 68px;
+                font-size: 18px
+            }
+
+            .cta-side {
+                min-width: 165px
+            }
+
+            .topbar-inner {
+                padding: 8px 14px;
+                gap: 6px
+            }
+
+            .top-pill {
+                font-size: 11px;
+                padding: 8px 8px;
+                min-height: 34px
+            }
+        }
+
+        @media (max-width:1023px) {
+            .page {
+                padding: 14px 14px 92px
+            }
+
+            .hero {
+                grid-template-columns: minmax(0, 1fr) minmax(0, .96fr);
+                gap: 14px;
+            }
+
+            .gallery-card,
+            .product-card {
+                padding: 13px
+            }
+
+            .gallery-top {
+                --thumb-col-width: 80px;
+                --thumb-gap: 8px;
+                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+                gap: 8px;
+            }
+
+            .main-media {
+                aspect-ratio: 1 / 1;
+                max-height: 380px;
+            }
+
+            .floating-notes {
+                display: none
+            }
+
+            .thumb-grid,
+            .ugc-strip {
+                gap: 8px
+            }
+
+            .thumb,
+            .ugc-photo {
+                flex: 0 0 80px !important;
+                min-width: 80px;
+                width: 80px;
+                height: 80px;
+                border-radius: 13px !important;
+            }
+
+            h1 {
+                font-size: 32px
+            }
+
+            .box {
+                padding: 13px
+            }
+
+            .box-title {
+                font-size: 14px
+            }
+
+            .micro {
+                font-size: 11px;
+                padding: 7px 9px
+            }
+
+            .size-grid,
+            .bundle-grid {
+                gap: 8px
+            }
+
+            .size-card,
+            .bundle-card {
+                padding: 11px
+            }
+
+            .size-name,
+            .bundle-top strong {
+                font-size: 15px
+            }
+
+            .size-sub,
+            .bundle-desc {
+                font-size: 11px
+            }
+
+            .size-price .new {
+                font-size: 17px
+            }
+
+            .size-price .old {
+                font-size: 11px
+            }
+
+            .checkout-card {
+                padding: 13px
+            }
+
+            .checkout-top-row {
+                grid-template-columns: minmax(0, 1fr) auto
+            }
+
+            .hero-price-now {
+                font-size: 30px
+            }
+
+            .hero-save-badge {
+                padding: 8px 10px;
+                min-width: 86px;
+                font-size: 12px
+            }
+
+            .checkout-review-line .chip {
+                padding: 8px 10px;
+                font-size: 12px
+            }
+
+            .cta-main-priority {
+                min-height: 60px;
+                font-size: 17px;
+                padding: 14px 16px
+            }
+
+            .cta-side {
+                min-height: 52px;
+                min-width: 145px;
+                font-size: 11px;
+                padding: 10px 12px
+            }
+
+            .trust-stats-lower {
+                gap: 8px
+            }
+
+            .trust-box {
+                padding: 12px
+            }
+
+            .trust-box .big {
+                font-size: 19px
+            }
+
+            .trust-box .small {
+                font-size: 11px
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 10px
+            }
+
+            .reviews-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px
+            }
+
+            .section-head {
+                gap: 12px
+            }
+
+            .section-head h2 {
+                font-size: 28px
+            }
+
+            .section-head p {
+                font-size: 14px
+            }
+
+            .mobile-sticky-buy {
+                display: block
+            }
+        }
+
+        @media (max-width:899px) {
+            .topbar-inner {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 6px;
+                justify-content: stretch;
+                padding: 7px 10px;
+            }
+
+            .top-pill {
+                width: 100%;
+                min-height: 34px;
+                padding: 7px 6px;
+                font-size: 10px;
+                text-align: center;
+                white-space: nowrap;
+            }
+
+            .page {
+                padding: 12px 12px 92px
+            }
+
+            .hero {
+                grid-template-columns: minmax(0, 1fr) minmax(0, .96fr);
+                gap: 12px;
+            }
+
+            .hero-left {
+                gap: 14px
+            }
+
+            .gallery-card,
+            .product-card {
+                padding: 12px
+            }
+
+            .gallery-top {
+                --thumb-col-width: 72px;
+                --thumb-gap: 8px;
+                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+                gap: 8px;
+            }
+
+            .main-media {
+                aspect-ratio: 1 / 1;
+                max-height: 340px;
+                border-radius: 18px;
+            }
+
+            .thumb,
+            .ugc-photo {
+                flex: 0 0 72px !important;
+                min-width: 72px;
+                width: 72px;
+                height: 72px;
+                border-radius: 12px !important;
+            }
+
+            h1 {
+                font-size: 28px
+            }
+
+            .checkout-top-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .trust-stats-lower {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section-head {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .section-head h2 {
+                font-size: 26px
+            }
+
+            .section-head p {
+                font-size: 13px
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 8px
+            }
+
+            .reviews-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px
+            }
+        }
+
+        @media (max-width:767px) {
+            .mini-reviews-card {
+                display: none;
+            }
+
+            .page {
+                padding: 10px 10px 88px
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .hero-left {
+                order: 1;
+                gap: 12px
+            }
+
+            .product-card {
+                order: 2
+            }
+
+            .gallery-card,
+            .product-card {
+                padding: 10px
+            }
+
+            .mini-reviews-card {
+                padding: 10px;
+                border-radius: 18px
+            }
+
+            .mini-reviews-head strong {
+                font-size: 15px
+            }
+
+            .mini-reviews-head a {
+                font-size: 11px
+            }
+
+            .mini-reviews-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                justify-content: stretch;
+                gap: 8px;
+            }
+
+            .mini-review-card {
+                border-radius: 14px
+            }
+
+            .mini-review-image {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1 / 1;
+            }
+
+            .mini-review-meta {
+                padding: 7px 8px
+            }
+
+            .mini-review-stars {
+                font-size: 10px
+            }
+
+            .mini-review-name {
+                font-size: 11px
+            }
+
+            .gallery-top {
+                --thumb-col-width: 64px;
+                --thumb-gap: 6px;
+                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+                gap: 6px;
+            }
+
+            .main-media {
+                aspect-ratio: 1 / 1;
+                max-height: 280px;
+                border-radius: 16px;
+            }
+
+            .thumb,
+            .ugc-photo {
+                flex: 0 0 64px !important;
+                min-width: 64px;
+                width: 64px;
+                height: 64px;
+                border-radius: 10px !important;
+            }
+
+            h1 {
+                font-size: 24px
+            }
+
+            .box {
+                padding: 10px;
+                border-radius: 16px
+            }
+
+            .box-head {
+                gap: 8px;
+                margin-bottom: 10px
+            }
+
+            .box-title {
+                font-size: 13px
+            }
+
+            .micro {
+                font-size: 10px;
+                padding: 6px 8px
+            }
+
+            .size-grid,
+            .bundle-grid {
+                gap: 6px
+            }
+
+            .size-card,
+            .bundle-card {
+                padding: 9px;
+                border-radius: 14px
+            }
+
+            .size-name,
+            .bundle-top strong {
+                font-size: 13px
+            }
+
+            .size-sub,
+            .bundle-desc {
+                font-size: 9px
+            }
+
+            .size-price .new {
+                font-size: 15px
+            }
+
+            .size-price .old {
+                font-size: 10px
+            }
+
+            .size-badge,
+            .bundle-save {
+                font-size: 10px;
+                padding: 5px 6px
+            }
+
+            .checkout-card {
+                padding: 10px;
+                border-radius: 18px
+            }
+
+            .checkout-main {
+                gap: 10px
+            }
+
+            .checkout-price-line {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px
+            }
+
+            .hero-price-now {
+                font-size: 24px
+            }
+
+            .hero-price-old {
+                font-size: 12px
+            }
+
+            .hero-price-label {
+                font-size: 11px
+            }
+
+            .hero-save-badge {
+                font-size: 11px;
+                min-width: auto
+            }
+
+            .checkout-review-line {
+                gap: 6px
+            }
+
+            .checkout-review-line .chip {
+                width: 100%;
+                justify-content: center;
+                font-size: 11px;
+                padding: 7px 8px;
+            }
+
+            .cta-main-priority {
+                min-height: 54px;
+                font-size: 15px;
+                padding: 12px 14px;
+                border-radius: 14px;
+            }
+
+            .cta-side {
+                min-width: 0;
+                min-height: 48px;
+                font-size: 10px;
+                padding: 8px 10px;
+                border-radius: 14px;
+            }
+
+            .trust-stats-lower {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+
+            .trust-box {
+                padding: 8px;
+                border-radius: 14px
+            }
+
+            .trust-box .big {
+                font-size: 15px
+            }
+
+            .trust-box .small {
+                font-size: 9px;
+                line-height: 1.35
+            }
+
+            .section {
+                margin-top: 22px
+            }
+
+            .section-head {
+                margin-bottom: 12px
+            }
+
+            .section-head h2 {
+                font-size: 22px
+            }
+
+            .section-head p {
+                font-size: 12px
+            }
+
+            .size-compare {
+                padding: 14px
+            }
+
+            .size-stage {
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+                min-height: auto;
+                padding: 8px 0 0;
+            }
+
+            .size-stage::after {
+                display: none
+            }
+
+            .size-col {
+                width: 100%;
+                gap: 10px
+            }
+
+            .moon-stand {
+                min-height: 170px
+            }
+
+            .size-col:nth-child(1) .moon-ball {
+                width: 110px !important;
+                height: 110px !important;
+            }
+
+            .size-col:nth-child(2) .moon-ball {
+                width: 145px !important;
+                height: 145px !important;
+            }
+
+            .size-col:nth-child(3) .moon-ball {
+                width: 180px !important;
+                height: 180px !important;
+            }
+
+            .size-meta strong {
+                font-size: 18px
+            }
+
+            .size-meta span {
+                font-size: 12px
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px
+            }
+
+            .gallery-caption {
+                font-size: 11px;
+                padding: 8px
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: 12px
+            }
+
+            .review-card {
+                padding: 12px;
+                border-radius: 18px
+            }
+
+            .review-photo {
+                border-radius: 14px;
+                margin: 10px 0 12px
+            }
+
+            .review-body,
+            .faq-a {
+                font-size: 12px
+            }
+
+            .avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 14px
+            }
+
+            .reviewer span {
+                font-size: 11px
+            }
+
+            .faq-q {
+                padding: 14px;
+                font-size: 14px
+            }
+
+            .topbar-inner {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 5px;
+                padding: 6px 8px
+            }
+
+            .top-pill {
+                font-size: 9px;
+                padding: 6px 4px;
+                min-height: 32px
+            }
+        }
+
+        @media (max-width:389px) {
+            .topbar-inner {
+                gap: 4px;
+                padding: 6px
+            }
+
+            .top-pill {
+                font-size: 8px;
+                padding: 6px 3px;
+                min-height: 30px
+            }
+
+            .page {
+                padding: 8px 8px 86px
+            }
+
+            .gallery-card,
+            .product-card {
+                padding: 8px
+            }
+
+            .gallery-top {
+                --thumb-col-width: 56px;
+                --thumb-gap: 6px;
+                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+            }
+
+            .main-media {
+                max-height: 230px
+            }
+
+            .thumb,
+            .ugc-photo {
+                flex: 0 0 56px !important;
+                min-width: 56px;
+                width: 56px;
+                height: 56px;
+                border-radius: 9px !important;
+            }
+
+            h1 {
+                font-size: 22px
+            }
+
+            .size-grid,
+            .bundle-grid {
+                gap: 5px
+            }
+
+            .size-card,
+            .bundle-card {
+                padding: 8px
+            }
+
+            .size-name,
+            .bundle-top strong {
+                font-size: 12px
+            }
+
+            .size-price .new {
+                font-size: 14px
+            }
+
+            .checkout-card {
+                padding: 9px
+            }
+
+            .hero-price-now {
+                font-size: 22px
+            }
+
+            .cta-main-priority {
+                font-size: 14px
+            }
+
+            .trust-stats-lower {
+                grid-template-columns: 1fr;
+                gap: 8px
+            }
+
+            .size-compare {
+                padding: 12px
+            }
+
+            .moon-stand {
+                min-height: 150px
+            }
+
+            .size-col:nth-child(1) .moon-ball {
+                width: 92px !important;
+                height: 92px !important;
+            }
+
+            .size-col:nth-child(2) .moon-ball {
+                width: 122px !important;
+                height: 122px !important;
+            }
+
+            .size-col:nth-child(3) .moon-ball {
+                width: 150px !important;
+                height: 150px !important;
+            }
+
+            .stand {
+                height: 42px;
+                border-width: 3px
+            }
+
+            .size-meta strong {
+                font-size: 16px
+            }
+
+            .size-meta span {
+                font-size: 11px
+            }
+
+            .mini-reviews-grid {
+                gap: 6px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="top-pill sale">
+                <span class="top-pill-text">A kedvezmény vége:<span id="countdown"
+                        style="margin-left:6px;">--:--:--</span></span>
+            </div>
+            <div class="top-pill safe">
+                <span class="top-pill-text">2 év garancia</span>
+            </div>
+            <div class="top-pill return">
+                <span class="top-pill-text">30 napos gyors visszaküldés</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="hero">
+            <div class="hero-left">
+                <div class="gallery-card card">
+                    <div class="gallery-top">
+                        <div class="main-media">
+                            <img id="main-image" src="" alt="Holdlámpa termékfotó" />
+                            <div class="floating-notes">
+                                <div class="note">Valósághű holdfelszín</div>
+                                <div class="note">Azonnal használható</div>
+                                <div class="note">1-2 munkanapos szállítás</div>
+                            </div>
+                        </div>
+
+                        <div class="thumb-grid" id="thumb-grid"></div>
+                    </div>
+                    <div class="ugc-strip-wrap">
+                        <div class="ugc-strip" id="ugc-strip"></div>
+                    </div>
+                </div>
+
+                <div class="mini-reviews-card">
+                    <div class="mini-reviews-head">
+                        <strong>Értékelések képekkel</strong>
+                        <a href="#ertekelesek-kepekkel">Összes →</a>
+                    </div>
+
+                    <a class="mini-reviews-grid" href="#ertekelesek-kepekkel">
+                        <article class="mini-review-card">
+                            <div class="mini-review-image">
+                                <img id="mini-review-1" src="" alt="Mini értékelés kép 1">
+                            </div>
+                            <div class="mini-review-meta">
+                                <span class="mini-review-stars">★★★★★</span>
+                                <span class="mini-review-name">Anita</span>
+                            </div>
+                        </article>
+
+                        <article class="mini-review-card">
+                            <div class="mini-review-image">
+                                <img id="mini-review-2" src="" alt="Mini értékelés kép 2">
+                            </div>
+                            <div class="mini-review-meta">
+                                <span class="mini-review-stars">★★★★★</span>
+                                <span class="mini-review-name">Bence</span>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            </div>
+
+            <div class="product-card card">
+                <h1>Holdlámpa több méretben</h1>
+
+                <div class="box">
+                    <div class="box-head">
+                        <div class="box-title">1. Válaszd ki a méretet</div>
+                        <span class="micro">Készlet gyorsan fogy</span>
+                    </div>
+                    <div class="size-grid" id="size-grid"></div>
+                </div>
+
+                <div class="box">
+                    <div class="box-head">
+                        <div class="box-title">2. Válassz csomagajánlatot</div>
+                        <span class="micro">Csomagkedvezmény</span>
+                    </div>
+                    <div class="bundle-grid" id="bundle-grid"></div>
+                </div>
+
+                <div class="checkout-card">
+                    <div class="checkout-main">
+                        <div class="checkout-top-row">
+                            <div class="checkout-side">
+                                <div class="checkout-price-line">
+                                    <div class="checkout-price-stack">
+                                        <span class="hero-price-label">Mai végösszeg</span>
+                                        <div class="checkout-price-inline">
+                                            <span class="hero-price-now" id="price-now">8 999 Ft</span>
+                                            <span class="hero-price-old" id="price-old">9 999 Ft</span>
+                                        </div>
+                                    </div>
+                                    <div class="hero-save-badge" id="save-badge">-1 000 Ft</div>
+                                </div>
+
+                                <div class="checkout-review-line">
+                                    <div class="chip">★★★★★ 4,9/5</div>
+                                    <div class="chip">127 értékelés</div>
+                                </div>
+                            </div>
+
+                            <div class="cta-side">
+                                🔒 Biztonságos fizetés<br>
+                                bankkártya / utánvét
+                            </div>
+                        </div>
+
+                        <div class="checkout-button-wrap">
+                            <button class="cta-main cta-main-priority" id="cta-button">Megrendelem most • 8 999
+                                Ft</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trust-stats-lower">
+                    <div class="trust-box">
+                        <span class="big">1-2 nap</span>
+                        <span class="small">gyors kiszállítás raktárról</span>
+                    </div>
+                    <div class="trust-box">
+                        <span class="big">10.000 Ft+</span>
+                        <span class="small">ingyenes szállítás ettől az értéktől</span>
+                    </div>
+                    <div class="trust-box">
+                        <span class="big">21 vásárló</span>
+                        <span class="small">ma már ezt a terméket választotta</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-head">
+                <div>
+                    <h2>Vizuális méret összehasonlítás</h2>
+                </div>
+                <p>
+                    Egy pillantással eldönthető, melyik méret illik jobban éjjeliszekrényre, polcra vagy nagyobb térbe.
+                </p>
+            </div>
+
+            <div class="size-compare">
+                <div class="size-stage">
+                    <div class="size-col">
+                        <div class="moon-stand">
+                            <div class="moon-ball" style="width:140px;height:140px;"></div>
+                            <div class="stand"></div>
+                        </div>
+                        <div class="size-meta">
+                            <strong>14 cm</strong>
+                            <span>Kompakt, kisebb helyekre</span>
+                        </div>
+                    </div>
+
+                    <div class="size-col">
+                        <div class="moon-stand">
+                            <div class="moon-ball" style="width:180px;height:180px;"></div>
+                            <div class="stand"></div>
+                        </div>
+                        <div class="size-meta">
+                            <strong>18 cm</strong>
+                            <span>Sokoldalú választás</span>
+                        </div>
+                    </div>
+
+                    <div class="size-col">
+                        <div class="moon-stand">
+                            <div class="moon-ball" style="width:235px;height:235px;"></div>
+                            <div class="stand"></div>
+                        </div>
+                        <div class="size-meta">
+                            <strong>23,5 cm</strong>
+                            <span>Látványosabb, nagyobb helyre</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-head">
+                <div>
+                    <h2>Vásárlói galéria</h2>
+                </div>
+                <p>
+                    Valódi környezetben fotózott képek, amelyek segítenek elképzelni, hogyan mutat a lámpa otthon.
+                </p>
+            </div>
+
+            <div class="gallery-grid" id="customer-gallery"></div>
+        </section>
+
+        <section class="section" id="ertekelesek-kepekkel">
+            <div class="section-head">
+                <div>
+                    <h2>Értékelések képekkel</h2>
+                </div>
+                <p>
+                    Rövid, hiteles visszajelzések valódi fotókkal, hogy a vásárlási döntés még könnyebb legyen.
+                </p>
+            </div>
+
+            <div class="reviews-grid">
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="reviewer">
+                            <div class="avatar">A</div>
+                            <div>
+                                <strong>Anita</strong>
+                                <span>18 cm • igazolt vásárló</span>
+                            </div>
+                        </div>
+                        <div class="chip">★★★★★</div>
+                    </div>
+                    <div class="review-photo">
+                        <img id="review-photo-1" src="" alt="Vásárlói fotó Anita otthonából">
+                    </div>
+                    <p class="review-body">
+                        Nagyon szép, gyorsan megérkezett, és pontosan olyan, mint amire számítottam.
+                    </p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="reviewer">
+                            <div class="avatar">B</div>
+                            <div>
+                                <strong>Bence</strong>
+                                <span>23,5 cm • igazolt vásárló</span>
+                            </div>
+                        </div>
+                        <div class="chip">★★★★★</div>
+                    </div>
+                    <div class="review-photo">
+                        <img id="review-photo-2" src="" alt="Vásárlói fotó Bence nappalijából">
+                    </div>
+                    <p class="review-body">
+                        Élőben még látványosabb. Ajándéknak vettük, végül magunknak is rendeltünk belőle.
+                    </p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="reviewer">
+                            <div class="avatar">K</div>
+                            <div>
+                                <strong>Kata</strong>
+                                <span>14 cm • igazolt vásárló</span>
+                            </div>
+                        </div>
+                        <div class="chip">★★★★★</div>
+                    </div>
+                    <div class="review-photo">
+                        <img id="review-photo-3" src="" alt="Vásárlói fotó Kata polcáról">
+                    </div>
+                    <p class="review-body">
+                        Kisebb helyre kerestem dekorfényt, erre a célra tökéletes volt.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-head">
+                <div>
+                    <h2>GYIK</h2>
+                </div>
+                <p>
+                    A leggyakoribb kérdések egy helyen, hogy minél kevesebb bizonytalanság maradjon rendelés előtt.
+                </p>
+            </div>
+
+            <div class="faq-wrap">
+                <div class="faq-item open">
+                    <button class="faq-q" type="button">
+                        <span>Melyik méretet érdemes választani?</span>
+                        <span>+</span>
+                    </button>
+                    <div class="faq-a">
+                        A 14 cm kompaktabb, a 18 cm sokoldalú, a 23,5 cm pedig látványosabb megjelenést ad nagyobb
+                        térben.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" type="button">
+                        <span>Mennyi idő alatt érkezik meg?</span>
+                        <span>+</span>
+                    </button>
+                    <div class="faq-a">
+                        A rendeléseket jellemzően 1-2 munkanapon belül kiszállítjuk.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" type="button">
+                        <span>Van rá garancia?</span>
+                        <span>+</span>
+                    </button>
+                    <div class="faq-a">
+                        Igen, minden Holdlámpára 2 év garanciát biztosítunk.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" type="button">
+                        <span>Mi van, ha mégsem tetszik?</span>
+                        <span>+</span>
+                    </button>
+                    <div class="faq-a">
+                        30 napig egyszerűen és gyorsan visszaküldheted.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <p class="footer-note">
+            A placeholder képeket egyszerűen cserélheted valódi termékfotókra és UGC képekre.
+        </p>
+    </main>
+
+    <div class="mobile-sticky-buy">
+        <div class="mobile-buy-inner">
+            <div class="mobile-price">
+                <span id="mobile-price-now">8 999 Ft</span>
+                <small id="mobile-price-old">9 999 Ft</small>
+            </div>
+            <button class="mobile-buy-btn" id="mobile-buy-btn">Megrendelem most</button>
+        </div>
+    </div>
+
+    <script>
+        const sizes = {
+            "14": {
+                label: "14 cm",
+                sale: 5999,
+                original: 6499,
+                stock: 4,
+                subtitle: "Kompakt méret kisebb helyekre"
+            },
+            "18": {
+                label: "18 cm",
+                sale: 8999,
+                original: 9999,
+                stock: 3,
+                subtitle: "Sokoldalú választás"
+            },
+            "23.5": {
+                label: "23,5 cm",
+                sale: 9999,
+                original: 12999,
+                stock: 2,
+                subtitle: "Látványos megjelenés"
+            }
+        };
+
+        const bundles = {
+            1: { label: "1 db", discount: 0, desc: "Normál rendelés" },
+            2: { label: "2 db", discount: 10, desc: "Extra kedvezmény két darabra" },
+            3: { label: "3 db", discount: 15, desc: "Nagyobb megtakarítás három darabra" }
+        };
+
+        const state = {
+            size: "18",
+            bundle: 1,
+            galleryIndex: 0
+        };
+
+        const sizeGrid = document.getElementById("size-grid");
+        const bundleGrid = document.getElementById("bundle-grid");
+        const thumbGrid = document.getElementById("thumb-grid");
+        const ugcStrip = document.getElementById("ugc-strip");
+        const customerGallery = document.getElementById("customer-gallery");
+
+        const mainImage = document.getElementById("main-image");
+        const priceNow = document.getElementById("price-now");
+        const priceOld = document.getElementById("price-old");
+        const saveBadge = document.getElementById("save-badge");
+        const ctaButton = document.getElementById("cta-button");
+        const mobilePriceNow = document.getElementById("mobile-price-now");
+        const mobilePriceOld = document.getElementById("mobile-price-old");
+
+        function formatHuf(num) {
+            return new Intl.NumberFormat("hu-HU").format(num) + " Ft";
+        }
+
+        function toDataUri(svg) {
+            return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+        }
+
+        function moonSvg(title, subtitle, tone = "warm") {
+            const bgTop = tone === "room" ? "#cfe7ff" : tone === "ugc" ? "#bdd7f4" : "#dbf0ff";
+            const bgBottom = tone === "room" ? "#183251" : tone === "ugc" ? "#20395b" : "#173254";
+            const roomOpacity = tone === "ugc" ? 0.92 : 0.86;
+
+            return toDataUri(`
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+          <defs>
+            <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="${bgTop}" />
+              <stop offset="100%" stop-color="${bgBottom}" />
+            </linearGradient>
+            <radialGradient id="moon" cx="35%" cy="30%">
+              <stop offset="0%" stop-color="#fffdf5" />
+              <stop offset="35%" stop-color="#f8f0cf" />
+              <stop offset="100%" stop-color="#e7c989" />
+            </radialGradient>
+            <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="22"/>
+            </filter>
+          </defs>
+
+          <rect width="900" height="900" fill="url(#bg)"/>
+          <circle cx="120" cy="100" r="2.5" fill="rgba(255,255,255,.85)"/>
+          <circle cx="200" cy="170" r="2.2" fill="rgba(255,255,255,.7)"/>
+          <circle cx="760" cy="130" r="3" fill="rgba(255,255,255,.88)"/>
+          <circle cx="650" cy="90" r="2.1" fill="rgba(255,255,255,.6)"/>
+          <circle cx="810" cy="240" r="2.4" fill="rgba(255,255,255,.72)"/>
+          <circle cx="560" cy="200" r="1.9" fill="rgba(255,255,255,.76)"/>
+          <circle cx="410" cy="110" r="2.6" fill="rgba(255,255,255,.65)"/>
+          <circle cx="330" cy="220" r="2" fill="rgba(255,255,255,.85)"/>
+
+          <ellipse cx="450" cy="420" rx="230" ry="230" fill="rgba(255,214,125,.38)" filter="url(#blur)"/>
+          <circle cx="450" cy="420" r="160" fill="url(#moon)"/>
+          <circle cx="372" cy="360" r="24" fill="rgba(158,110,36,.1)"/>
+          <circle cx="528" cy="472" r="18" fill="rgba(158,110,36,.08)"/>
+          <circle cx="512" cy="328" r="28" fill="rgba(158,110,36,.07)"/>
+          <circle cx="400" cy="500" r="20" fill="rgba(158,110,36,.07)"/>
+          <circle cx="340" cy="470" r="12" fill="rgba(158,110,36,.09)"/>
+          <circle cx="500" cy="560" r="14" fill="rgba(158,110,36,.08)"/>
+
+          <path d="M325 652 Q450 776 575 652" fill="none" stroke="#a67631" stroke-width="16" stroke-linecap="round"/>
+          <path d="M345 652 Q450 736 555 652" fill="none" stroke="#c08a3f" stroke-width="6" stroke-linecap="round"/>
+
+          <rect x="0" y="700" width="900" height="200" fill="rgba(13,25,44,${roomOpacity})"/>
+          <rect x="86" y="610" width="70" height="90" rx="8" fill="rgba(24,38,60,.22)"/>
+          <rect x="728" y="618" width="86" height="82" rx="8" fill="rgba(24,38,60,.2)"/>
+          <rect x="196" y="648" width="80" height="52" rx="10" fill="rgba(24,38,60,.16)"/>
+          <rect x="612" y="654" width="100" height="46" rx="10" fill="rgba(24,38,60,.16)"/>
+
+          <rect x="46" y="42" rx="20" ry="20" width="320" height="56" fill="rgba(255,255,255,.88)"/>
+          <text x="68" y="77" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="#0f2037">${title}</text>
+
+          <rect x="46" y="112" rx="18" ry="18" width="350" height="44" fill="rgba(255,255,255,.74)"/>
+          <text x="68" y="140" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700" fill="#27425d">${subtitle}</text>
+        </svg>
+      `);
+        }
+
+        const galleryBySize = {
+            "14": [
+                "main_image.png",
+                moonSvg("14 cm", "Oldalnézet", "room"),
+                moonSvg("14 cm", "Közelről", "warm"),
+                moonSvg("14 cm", "Otthoni környezetben", "ugc")
+            ],
+            "18": [
+                "main_image.png",
+                moonSvg("18 cm", "Asztalon", "room"),
+                moonSvg("18 cm", "Közelről", "warm"),
+                moonSvg("18 cm", "Otthoni környezetben", "ugc")
+            ],
+            "23.5": [
+                "main_image.png",
+                moonSvg("23,5 cm", "Nagyobb térben", "room"),
+                moonSvg("23,5 cm", "Közelről", "warm"),
+                moonSvg("23,5 cm", "Otthoni környezetben", "ugc")
+            ]
+        };
+
+        const ugcPhotos = [
+            moonSvg("Vásárlói fotó", "éjjeliszekrényen", "ugc"),
+            moonSvg("Vásárlói fotó", "polcon", "ugc"),
+            moonSvg("Vásárlói fotó", "nappaliban", "ugc"),
+            moonSvg("Vásárlói fotó", "ajándékként", "ugc")
+        ];
+
+        const galleryPhotos = [
+            { src: moonSvg("Galéria", "Hálószobában", "ugc"), caption: "Hálószobában" },
+            { src: moonSvg("Galéria", "Polcon elhelyezve", "ugc"), caption: "Polcon" },
+            { src: moonSvg("Galéria", "Nappaliban", "ugc"), caption: "Nappaliban" },
+            { src: moonSvg("Galéria", "Ajándéknak", "ugc"), caption: "Ajándéknak" },
+            { src: moonSvg("Galéria", "Esti fények", "ugc"), caption: "Esti fény" },
+            { src: moonSvg("Galéria", "Otthoni környezetben", "ugc"), caption: "Otthoni fotó" }
+        ];
+
+        function renderSizes() {
+            sizeGrid.innerHTML = "";
+            Object.entries(sizes).forEach(([key, value]) => {
+                const card = document.createElement("button");
+                card.type = "button";
+                card.className = "size-card" + (state.size === key ? " active" : "");
+                card.innerHTML = `
+          ${key === "18" ? `<span class="size-badge">Ajánlott</span>` : ""}
+          <div class="size-name">${value.label}</div>
+          <div class="size-sub">${value.subtitle}</div>
+          <div class="size-price">
+            <span class="old">${formatHuf(value.original)}</span>
+            <span class="new">${formatHuf(value.sale)}</span>
+          </div>
+        `;
+                card.addEventListener("click", () => {
+                    state.size = key;
+                    state.galleryIndex = 0;
+                    renderAll();
+                });
+                sizeGrid.appendChild(card);
+            });
+        }
+
+        function renderBundles() {
+            bundleGrid.innerHTML = "";
+            Object.entries(bundles).forEach(([key, value]) => {
+                const bundle = Number(key);
+                const card = document.createElement("button");
+                card.type = "button";
+                card.className = "bundle-card" + (state.bundle === bundle ? " active" : "");
+                card.innerHTML = `
+          <div class="bundle-top">
+            <strong>${value.label}</strong>
+            <span class="bundle-save">${value.discount ? "-" + value.discount + "%" : "Normál"}</span>
+          </div>
+          <div class="bundle-desc">${value.desc}</div>
+        `;
+                card.addEventListener("click", () => {
+                    state.bundle = bundle;
+                    renderAll();
+                });
+                bundleGrid.appendChild(card);
+            });
+        }
+
+        function renderThumbs() {
+            thumbGrid.innerHTML = "";
+            galleryBySize[state.size].forEach((src, index) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "thumb" + (state.galleryIndex === index ? " active" : "");
+                btn.innerHTML = `<img src="${src}" alt="Holdlámpa nézet ${index + 1}">`;
+                btn.addEventListener("click", () => {
+                    state.galleryIndex = index;
+                    renderMainImage();
+                });
+                thumbGrid.appendChild(btn);
+            });
+        }
+
+        function renderMainImage() {
+            mainImage.src = galleryBySize[state.size][state.galleryIndex];
+            mainImage.alt = `Holdlámpa ${sizes[state.size].label} termékfotó`;
+            [...thumbGrid.children].forEach((el, i) => {
+                el.classList.toggle("active", i === state.galleryIndex);
+            });
+        }
+
+        function renderUGCStrip() {
+            ugcStrip.innerHTML = "";
+            ugcPhotos.forEach((src, index) => {
+                const el = document.createElement("div");
+                el.className = "ugc-photo";
+                el.innerHTML = `<img src="${src}" alt="Vásárlói fotó ${index + 1}">`;
+                ugcStrip.appendChild(el);
+            });
+        }
+
+        function renderCustomerGallery() {
+            customerGallery.innerHTML = "";
+            galleryPhotos.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "gallery-photo";
+                card.innerHTML = `
+          <img src="${item.src}" alt="${item.caption}">
+          <div class="gallery-caption">${item.caption}</div>
+        `;
+                customerGallery.appendChild(card);
+            });
+        }
+
+        function renderReviews() {
+            document.getElementById("review-photo-1").src = moonSvg("Anita otthona", "18 cm", "ugc");
+            document.getElementById("review-photo-2").src = moonSvg("Bence nappalija", "23,5 cm", "ugc");
+            document.getElementById("review-photo-3").src = moonSvg("Kata polca", "14 cm", "ugc");
+            document.getElementById("mini-review-1").src = moonSvg("Anita otthona", "18 cm", "ugc");
+            document.getElementById("mini-review-2").src = moonSvg("Bence nappalija", "23,5 cm", "ugc");
+        }
+
+        function renderPricing() {
+            const current = sizes[state.size];
+            const bundle = bundles[state.bundle];
+            const saleSubtotal = current.sale * state.bundle;
+            const discounted = Math.round(saleSubtotal * (1 - bundle.discount / 100));
+            const originalTotal = current.original * state.bundle;
+            const totalSaving = originalTotal - discounted;
+
+            priceNow.textContent = formatHuf(discounted);
+            priceOld.textContent = formatHuf(originalTotal);
+            saveBadge.textContent = "-" + formatHuf(totalSaving);
+            ctaButton.textContent = `Megrendelem most • ${formatHuf(discounted)}`;
+            mobilePriceNow.textContent = formatHuf(discounted);
+            mobilePriceOld.textContent = formatHuf(originalTotal);
+        }
+
+        function renderAll() {
+            renderSizes();
+            renderBundles();
+            renderThumbs();
+            renderMainImage();
+            renderPricing();
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date();
+            end.setHours(23, 59, 59, 999);
+
+            let diff = end.getTime() - now.getTime();
+            if (diff < 0) diff = 0;
+
+            const hours = String(Math.floor(diff / 3600000)).padStart(2, "0");
+            const minutes = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
+            const seconds = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
+
+            document.getElementById("countdown").textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        document.querySelectorAll(".faq-q").forEach(btn => {
+            btn.addEventListener("click", () => {
+                btn.closest(".faq-item").classList.toggle("open");
+            });
+        });
+
+        document.getElementById("mobile-buy-btn").addEventListener("click", () => {
+            document.getElementById("cta-button").scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+
+        renderUGCStrip();
+        renderCustomerGallery();
+        renderReviews();
+        renderAll();
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+
+</html>
