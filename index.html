@@ -273,7 +273,7 @@
             display: grid;
             grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
             gap: 12px;
-            align-items: stretch;
+            align-items: start;
         }
 
         .main-media {
@@ -318,15 +318,17 @@
             width: var(--thumb-col-width);
             min-width: var(--thumb-col-width);
             display: grid;
-            grid-template-rows: repeat(4, minmax(0, 1fr));
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, var(--thumb-col-width));
             gap: var(--thumb-gap);
-            align-self: stretch;
-            height: 100%;
+            align-self: start;
+            height: auto;
         }
 
         .thumb {
             width: 100%;
-            height: 100%;
+            min-width: 0;
+            height: auto;
             min-height: 0;
             padding: 0;
             overflow: hidden;
@@ -336,7 +338,7 @@
             cursor: pointer;
             box-shadow: 0 8px 18px rgba(6, 16, 34, .06);
             transition: .2s ease;
-            aspect-ratio: auto;
+            aspect-ratio: 1 / 1;
         }
 
         .thumb.active {
@@ -347,9 +349,10 @@
         .thumb img {
             width: 100%;
             height: 100%;
-            aspect-ratio: auto;
+            aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: inherit;
+            display: block;
         }
 
         .ugc-strip-wrap {
@@ -1151,7 +1154,13 @@
                 max-height: 430px;
             }
 
-            .thumb,
+            .thumb {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                border-radius: 14px !important;
+            }
+
             .ugc-photo {
                 flex: 0 0 88px !important;
                 min-width: 88px;
@@ -1225,7 +1234,13 @@
                 gap: 8px
             }
 
-            .thumb,
+            .thumb {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                border-radius: 13px !important;
+            }
+
             .ugc-photo {
                 flex: 0 0 80px !important;
                 min-width: 80px;
@@ -1425,7 +1440,13 @@
                 border-radius: 18px;
             }
 
-            .thumb,
+            .thumb {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                border-radius: 12px !important;
+            }
+
             .ugc-photo {
                 flex: 0 0 72px !important;
                 min-width: 72px;
@@ -1473,12 +1494,8 @@
         }
 
         @media (max-width:767px) {
-            .mini-reviews-card {
-                display: none;
-            }
-
             .page {
-                padding: 10px 10px 88px
+                padding: 10px 10px 88px;
             }
 
             .hero {
@@ -1488,7 +1505,10 @@
 
             .hero-left {
                 order: 1;
-                gap: 12px
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) 108px;
+                gap: 10px;
+                align-items: start;
             }
 
             .product-card {
@@ -1500,27 +1520,104 @@
                 padding: 10px
             }
 
+            .gallery-card {
+                min-width: 0;
+            }
+
+            .gallery-top {
+                --thumb-col-width: 52px;
+                --thumb-gap: 6px;
+                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+                gap: 6px;
+                align-items: start;
+            }
+
+            .main-media {
+                aspect-ratio: 1 / 1;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                margin-left: 0;
+                margin-right: 0;
+                border-radius: 16px;
+            }
+
+            .thumb-grid {
+                width: var(--thumb-col-width);
+                min-width: var(--thumb-col-width);
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, var(--thumb-col-width));
+                gap: var(--thumb-gap);
+                height: auto;
+                align-self: start;
+            }
+
+            .thumb {
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                min-height: 0;
+                aspect-ratio: 1 / 1;
+                padding: 0;
+                border-radius: 10px !important;
+                overflow: hidden;
+            }
+
+            .thumb img {
+                width: 100%;
+                height: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                display: block;
+            }
+
+            .ugc-strip-wrap {
+                display: block;
+                margin-top: 8px;
+            }
+
+            .ugc-strip {
+                gap: 6px;
+                padding: 2px 0 4px;
+            }
+
+            .ugc-photo {
+                flex: 0 0 52px !important;
+                min-width: 52px;
+                width: 52px;
+                height: 52px;
+                border-radius: 10px !important;
+            }
+
             .mini-reviews-card {
-                padding: 10px;
-                border-radius: 18px
+                display: block;
+                padding: 8px;
+                border-radius: 16px;
+                min-width: 0;
+                align-self: stretch;
+            }
+
+            .mini-reviews-head {
+                margin-bottom: 8px;
             }
 
             .mini-reviews-head strong {
-                font-size: 15px
+                font-size: 13px
             }
 
             .mini-reviews-head a {
-                font-size: 11px
+                display: none;
             }
 
             .mini-reviews-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: 1fr;
                 justify-content: stretch;
                 gap: 8px;
             }
 
             .mini-review-card {
-                border-radius: 14px
+                border-radius: 12px
             }
 
             .mini-review-image {
@@ -1530,37 +1627,15 @@
             }
 
             .mini-review-meta {
-                padding: 7px 8px
+                padding: 6px 7px
             }
 
             .mini-review-stars {
-                font-size: 10px
+                font-size: 9px
             }
 
             .mini-review-name {
-                font-size: 11px
-            }
-
-            .gallery-top {
-                --thumb-col-width: 64px;
-                --thumb-gap: 6px;
-                grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
-                gap: 6px;
-            }
-
-            .main-media {
-                aspect-ratio: 1 / 1;
-                max-height: 280px;
-                border-radius: 16px;
-            }
-
-            .thumb,
-            .ugc-photo {
-                flex: 0 0 64px !important;
-                min-width: 64px;
-                width: 64px;
-                height: 64px;
-                border-radius: 10px !important;
+                font-size: 10px
             }
 
             h1 {
@@ -1847,6 +1922,17 @@
             }
         }
 
+        @media (min-width:413px) and (max-width:767px) {
+            .hero-left {
+                grid-template-columns: minmax(0, 360px) 108px;
+                justify-content: start;
+            }
+
+            .gallery-card {
+                width: 100%;
+            }
+        }
+
         @media (max-width:389px) {
             .topbar-inner {
                 gap: 4px;
@@ -1863,28 +1949,81 @@
                 padding: 8px 8px 86px
             }
 
+            .hero-left {
+                grid-template-columns: minmax(0, 1fr) 92px;
+                gap: 8px;
+            }
+
             .gallery-card,
             .product-card {
                 padding: 8px
             }
 
             .gallery-top {
-                --thumb-col-width: 56px;
-                --thumb-gap: 6px;
+                --thumb-col-width: 46px;
+                --thumb-gap: 5px;
                 grid-template-columns: minmax(0, 1fr) var(--thumb-col-width);
+                gap: 5px;
             }
 
             .main-media {
-                max-height: 230px
+                max-width: none;
             }
 
-            .thumb,
-            .ugc-photo {
-                flex: 0 0 56px !important;
-                min-width: 56px;
-                width: 56px;
-                height: 56px;
+            .thumb-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, var(--thumb-col-width));
+                gap: var(--thumb-gap);
+            }
+
+            .thumb {
+                width: 100%;
+                height: auto;
+                min-height: 0;
+                aspect-ratio: 1 / 1;
                 border-radius: 9px !important;
+                overflow: hidden;
+            }
+
+            .thumb img {
+                width: 100%;
+                height: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                display: block;
+            }
+
+            .ugc-strip {
+                gap: 5px;
+            }
+
+            .ugc-photo {
+                flex: 0 0 46px !important;
+                min-width: 46px;
+                width: 46px;
+                height: 46px;
+                border-radius: 9px !important;
+            }
+
+            .mini-reviews-card {
+                padding: 6px;
+                border-radius: 14px;
+            }
+
+            .mini-reviews-head strong {
+                font-size: 12px;
+            }
+
+            .mini-review-meta {
+                padding: 5px 6px;
+            }
+
+            .mini-review-stars {
+                font-size: 8px;
+            }
+
+            .mini-review-name {
+                font-size: 9px;
             }
 
             h1 {
